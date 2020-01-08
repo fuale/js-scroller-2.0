@@ -1,0 +1,14 @@
+{
+  "name": "jsscroller",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "license": "MIT",
+  "dependencies": {
+    "@types/ramda": "^0.26.39",
+    "parcel": "^1.12.4",
+    "ramda": "^0.26.1"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.4"
+  }
+}

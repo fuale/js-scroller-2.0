@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Demo</title>
+    <style>
+      html,
+      body {
+        scroll-behavior: smooth;
+      }
+      .wall {
+        width: 100%;
+        line-height: 100vh;
+        color: white;
+        font-size: 50vh;
+        font-family: Roboto, monospace;
+        text-align: center;
+        height: 100vh;
+      }
+      .wall:nth-child(1) {
+        background: chocolate;
+      }
+      .wall:nth-child(2) {
+        background: blueviolet;
+      }
+      .wall:nth-child(3) {
+        background: cadetblue;
+      }
+      .wall:nth-child(4) {
+        background: coral;
+      }
+      .wall:nth-child(5) {
+        background: deeppink;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div class="wall">1</div>
+      <div class="wall">2</div>
+      <div class="wall">3</div>
+      <div class="wall">4</div>
+      <div class="wall">5</div>
+    </div>
+
+    <script src="demo.ts"></script>
+  </body>
+</html>
