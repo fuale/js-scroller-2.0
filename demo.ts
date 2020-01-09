@@ -1,4 +1,4 @@
-import setup from "./fp"
+import fullpagescroll from "./fp"
 import FullPageScroll from "./oop"
 
 const fullPageScroll = new FullPageScroll({
@@ -6,4 +6,6 @@ const fullPageScroll = new FullPageScroll({
 })
 
 //fullPageScroll.start()
-const teardown = setup(document.querySelector("#container"))
+const start = fullpagescroll(document.querySelector("#container"))
+const stop = start()
+
