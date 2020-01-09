@@ -4,7 +4,9 @@
   "main": "index.ts",
   "license": "MIT",
   "dependencies": {
+    "@types/node": "^13.1.5",
     "@types/ramda": "^0.26.39",
+    "nodemark": "^0.3.0",
     "parcel": "^1.12.4",
     "ramda": "^0.26.1"
   },

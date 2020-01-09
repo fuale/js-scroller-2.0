@@ -1,16 +1,5 @@
-import {
-  compose,
-  converge,
-  dec,
-  gt,
-  ifElse,
-  inc,
-  includes,
-  indexOf,
-  map,
-  prop,
-  reduce
-} from "ramda"
+import { compose, dec, gt, ifElse, inc, includes, indexOf, map } from "ramda"
+
 const { abs, max, min } = Math
 
 // Any HTML element which is scrollable
@@ -18,37 +7,42 @@ interface Scrollable {
   scrollBy(x: number, y: number): void
 }
 
-const getTopOf = (e: Element): number => prop("top", e.getBoundingClientRect())
+const getTopOf = (e: Element): number => e.getBoundingClientRect().top
 
-// returned index of closest element to viewport
-const current = (top: number, children: Element[]) => {
-  const list = compose(map(abs), map(getTopOf))
-  const get = compose(indexOf, reduce(min, Infinity), list)
-
-  console.log (
-      get(children)(list(children))
-  )
-
-  return get(children)(list(children))
+const offset = (offsets: number[]) => {
+  const absed = map(abs, offsets)
+  return indexOf(min(...absed), absed)
 }
 
-const eventHandler = (current: number, maximum: number) => (predicate: boolean) =>
-  ifElse(
-    () => predicate,
-    () => max(dec(current), 0),
-    () => min(inc(current), dec(maximum))
+const current = compose(
+  offset,
+  map(getTopOf)
+)
+
+// returned index of closest element to viewport
+const setup = (container: Element, scrollable: Scrollable = window) => {
+  const children = Array.from(container.children)
+  const scroll = k => scrollable.scrollBy(0, getTopOf(children[k()]))
+
+  const incdec = predicate =>
+    ifElse(
+      () => predicate,
+      () => max(dec(current(children)), 0),
+      () => min(inc(current(children)), dec(children.length))
+    )
+
+  const emit = compose(
+    scroll,
+    incdec
   )
 
-const setup = (container: Element, scrollable: Scrollable = window) => {
-  const childs = Array.from(container.children)
-  const scroll = k => scrollable.scrollBy(0, getTopOf(childs[k()]))
-  const incdec = x => eventHandler(current(container.scrollTop, childs), childs.length)(x)
-  const emitter = a => e => a(e) !== 0 && compose(scroll, incdec)(a(e))
-  const wheelEventHandler = emitter(event => event.preventDefault() || gt(0, event.deltaY))
-  const keyboardEventHandler = emitter(event => {
-    const up = includes(event.key, ["PageUp", "ArrowUp"])
-    const down = includes(event.key, ["PageDown", "ArrowDown"])
-    return up || down ? event.preventDefault() || (up && !down) : 0
+  const emitter = a => e => a(e) !== 0 && emit(a(e))
+  const wheelEventHandler = emitter(e => e.preventDefault() || gt(0, e.deltaY))
+
+  const keyboardEventHandler = emitter(e => {
+    const up = includes(e.key, ["PageUp", "ArrowUp"])
+    const down = includes(e.key, ["PageDown", "ArrowDown"])
+    return up || down ? e.preventDefault() || (up && !down) : 0
   })
 
   document.addEventListener("wheel", wheelEventHandler, { passive: false })
