@@ -1,4 +1,17 @@
-import { compose, dec, gt, ifElse, inc, includes, indexOf, map } from "ramda"
+import {
+  compose,
+  curry,
+  dec,
+  gt,
+  ifElse,
+  inc,
+  includes,
+  indexOf,
+  map,
+  nth,
+  tap
+} from "ramda"
+import { log } from "util"
 const { abs, max, min } = Math
 
 // getTopOf :: Element -> number
@@ -13,12 +26,13 @@ const offset = offsets => {
 const current = compose(offset, map(getTopOf))
 
 // incdec :: number -> number -> (a -> bool) -> number
-const incdec = children => predicate =>
+const incdec = curry((predicate, children) =>
   ifElse(
-    () => predicate,
+    predicate,
     () => max(dec(current(children)), 0),
     () => min(inc(current(children)), dec(children.length))
-  )
+  )(null)
+)
 
 // Effect
 const listener = (x, k): (() => void) => {
@@ -28,9 +42,13 @@ const listener = (x, k): (() => void) => {
 
 const fullpagescroll = (container: Element, scrollable: Scrollable = window) => {
   const children = Array.from(container.children)
-  const scroll = k => scrollable.scrollBy(0, getTopOf(children[k()]))
-  const emit = compose(scroll, incdec(children))
-  const emitter = a => e => a(e) !== 0 && emit(a(e))
+  const scroll = y => scrollable.scrollBy(0, y)
+  const emit = compose(scroll, getTopOf, nth, incdec)
+
+  console.log(emit(() => false, children))
+
+  return
+  const emitter = a => e => a(e) !== 0 && emit(() => a(e))
   const wheelEventHandler = emitter(e => e.preventDefault() || gt(0, e.deltaY))
   const keyboardEventHandler = emitter(e => {
     const up = includes(e.key, ["PageUp", "ArrowUp"])
