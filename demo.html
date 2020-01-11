@@ -13,10 +13,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Demo</title>
     <style>
-      html,
-      body {
-        scroll-behavior: smooth;
-      }
       .wall {
         width: 100%;
         line-height: 100vh;
@@ -27,13 +23,13 @@
         height: 100vh;
       }
       .wall:nth-child(1) {
-        background: chocolate;
+        background: teal;
       }
       .wall:nth-child(2) {
         background: blueviolet;
       }
       .wall:nth-child(3) {
-        background: cadetblue;
+        background: peru;
       }
       .wall:nth-child(4) {
         background: coral;
@@ -41,17 +37,42 @@
       .wall:nth-child(5) {
         background: deeppink;
       }
+      .wall:nth-child(6) {
+        background: indigo;
+      }
+      .containers {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #fp,
+      #oop {
+        scroll-behavior: smooth;
+        height: 100vh;
+        overflow: auto;
+        width: 90%;
+      }
     </style>
   </head>
   <body>
-    <div id="container">
-      <div class="wall">1</div>
-      <div class="wall">2</div>
-      <div class="wall">3</div>
-      <div class="wall">4</div>
-      <div class="wall">5</div>
+    <div class="containers">
+      <div id="fp">
+        <div class="wall">F</div>
+        <div class="wall">P</div>
+        <div class="wall">F</div>
+        <div class="wall">P</div>
+        <div class="wall">F</div>
+        <div class="wall">P</div>
+      </div>
+      <div id="oop">
+        <div class="wall">O</div>
+        <div class="wall">O</div>
+        <div class="wall">P</div>
+        <div class="wall">O</div>
+        <div class="wall">O</div>
+        <div class="wall">P</div>
+      </div>
     </div>
-
-    <script src="demo.ts"></script>
+    <script src="demo.js"></script>
   </body>
 </html>

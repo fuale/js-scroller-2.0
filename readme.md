@@ -1,3 +1,6 @@
+- yarn
+- yarn run parcel demo.html
+- http://localhost:1234
 # Licence
 Copyright 2020, Farid Akhmedov farid5ip50@gmail.com
 

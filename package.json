@@ -12,6 +12,10 @@
     "ramda": "^0.26.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-0",
+    "@babel/plugin-proposal-pipeline-operator": "^7.7.7",
+    "@babel/preset-stage-1": "^7.0.0",
+    "@babel/preset-typescript": "^7.7.7",
     "typescript": "^3.7.4"
   }
 }

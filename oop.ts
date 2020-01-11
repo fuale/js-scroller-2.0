@@ -1,56 +1,68 @@
 interface Options {
   container: Element
+  scroll: Scrollable
+}
+
+interface Scrollable {
+  scrollBy(x: number, y: number): void
 }
 
 export default class FullPageScroll {
-  private top: number
   private readonly container: Element
+  private readonly scroll: Scrollable
 
   constructor(options: Options) {
     this.container = options.container
+    this.scroll = options.scroll || options.container
   }
 
-  private getTopOffset(element: Element) {
+  private getTopOffset(element: Element): number {
     return element.getBoundingClientRect().top
   }
 
-  public start() {
-    this.enableEventListeners()
+  private wheelEventHandler(event: WheelEvent): void {
+    event.preventDefault()
+    const current = this.getCurrent()
+    const max = this.container.children.length - 1
+    event.deltaY > 0
+      ? this.scrollTo(Math.min(current + 1, max))
+      : this.scrollTo(Math.max(current - 1, 0))
   }
 
-  private wheelEventHandler(event: WheelEvent) {
-    event.preventDefault()
-    this.top = this.getTopOffset(this.container)
-    const offsets = Array.from(this.container.children).map(
-      child => this.top + this.getTopOffset(child)
+  private getCurrent(): number {
+    const children = Array.from(this.container.children)
+    const offsets = children.map(this.getTopOffset)
+    const { abs, max } = Math
+    return offsets.indexOf(
+      offsets.reduce((a, c) => (abs(c) < abs(a) ? c : a), max(...offsets))
     )
-    const abs = offsets.reduce((a, c) => (Math.abs(c) < Math.abs(a) ? c : a), Math.max(...offsets))
-    const current = offsets.indexOf(abs)
-    if (event.deltaY > 0) {
-      console.log((current + 1) % (this.container.children.length - 1))
-      this.scrollTo((current + 1) % (this.container.children.length - 1))
-    } else {
-      this.scrollTo((current - 1) % (this.container.children.length - 1))
-    }
   }
 
   private scrollTo(i: number) {
-    window.scrollBy(0, this.getTopOffset(this.container.children[i]))
+    this.scroll.scrollBy(0, this.getTopOffset(this.container.children.item(i)))
   }
 
-  private keyboardEventHandler() {}
-
-  private enableEventListeners() {
-    document.addEventListener("wheel", this.wheelEventHandler.bind(this), { passive: false })
-    document.addEventListener("wheel", this.keyboardEventHandler.bind(this))
+  private keyboardEventHandler(event: KeyboardEvent): void {
+    const max = this.container.children.length - 1
+    const current = this.getCurrent()
+    const up = ["PageUp", "ArrowUp"].includes(event.key)
+    const down = ["PageDown", "ArrowDown"].includes(event.key)
+    if (up || down) {
+      event.preventDefault()
+      up && this.scrollTo(Math.max(current - 1, 0))
+      down && this.scrollTo(Math.min(current + 1, max))
+    }
   }
 
-  private disableEventListeners() {
+  public enableEventListeners(): void {
+    document.addEventListener("wheel", this.wheelEventHandler.bind(this), {
+      passive: false
+    })
+    document.addEventListener("keydown", this.keyboardEventHandler.bind(this))
+  }
+
+  public disableEventListeners(): void {
     document.removeEventListener("wheel", this.wheelEventHandler.bind(this))
     document.removeEventListener("keydown", this.keyboardEventHandler.bind(this))
-  }
-
-  public stop() {
-    this.disableEventListeners()
   }
 }
