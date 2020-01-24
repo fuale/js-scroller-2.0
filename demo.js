@@ -15,4 +15,5 @@ new FullPageScroll({
  * @type {function(): function(): *}
  */
 const container = document.querySelector("#fp")
-fullpagescroll(container, container)()
+const start = fullpagescroll(container, container)
+const stop = start()

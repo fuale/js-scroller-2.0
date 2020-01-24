@@ -6,10 +6,15 @@
   "dependencies": {
     "@types/node": "^13.1.5",
     "@types/ramda": "^0.26.39",
+    "@types/sanctuary": "^0.14.2",
+    "fantasy-land": "^4.0.1",
+    "folktale": "^2.3.2",
     "monet": "^0.9.0",
     "nodemark": "^0.3.0",
     "parcel": "^1.12.4",
-    "ramda": "^0.26.1"
+    "ramda": "^0.26.1",
+    "ramda-fantasy": "^0.8.0",
+    "sanctuary": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",

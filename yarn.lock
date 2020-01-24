@@ -828,6 +828,11 @@
   dependencies:
     ts-toolbelt "^4.12.0"
 
+"@types/sanctuary@^0.14.2":
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/@types/sanctuary/-/sanctuary-0.14.2.tgz#115ee27fd40ba2eee31e81592bc799d33ecbca7d"
+  integrity sha512-FvgVY2yXGAYj5PqfVxND7deTAYymj8rnImfo/LClB/1dILpjhiCA4WRFGq1B4wUxvYzYmVWio2rLN/CL4uBEgQ==
+
 abab@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.3.tgz#623e2075e02eb2d3f2475e49f99c91846467907a"
@@ -2171,6 +2176,11 @@ falafel@^2.1.0:
     isarray "0.0.1"
     object-keys "^1.0.6"
 
+fantasy-land@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/fantasy-land/-/fantasy-land-4.0.1.tgz#6f9d8ef7971de83e64238ade019de6099a1e8d2e"
+  integrity sha512-DY+q9s8is2ELcu38SbnmltRahqPjc1tOhR2VIBrPyzVTkCYNiTfBXLKHilloCj0GoDBnlgSy1c6tkhc/8sFraQ==
+
 fast-deep-equal@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-2.0.1.tgz#7b05218ddf9667bf7f370bf7fdb2cb15fdd0aa49"
@@ -2229,6 +2239,11 @@ find-up@^3.0.0:
   integrity sha512-1yD6RmLI1XBfxugvORwlck6f75tYL+iR0jqwsOrOxMZyGYqUuDhJ0l4AXdO1iX/FTs9cBAMEk1gWSEx1kSbylg==
   dependencies:
     locate-path "^3.0.0"
+
+folktale@^2.3.2:
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/folktale/-/folktale-2.3.2.tgz#38231b039e5ef36989920cbf805bf6b227bf4fd4"
+  integrity sha512-+8GbtQBwEqutP0v3uajDDoN64K2ehmHd0cjlghhxh0WpcfPzAIjPA03e1VvHlxL02FVGR0A6lwXsNQKn3H1RNQ==
 
 for-in@^1.0.2:
   version "1.0.2"
@@ -4071,7 +4086,14 @@ quote-stream@^1.0.1, quote-stream@~1.0.2:
     minimist "^1.1.3"
     through2 "^2.0.0"
 
-ramda@^0.26.1:
+ramda-fantasy@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/ramda-fantasy/-/ramda-fantasy-0.8.0.tgz#9e8c37d93ec0a70796cfc10873dd9c50850390f6"
+  integrity sha1-now32T7ApweWz8EIc92cUIUDkPY=
+  dependencies:
+    ramda ">=0.15.0"
+
+ramda@>=0.15.0, ramda@^0.26.1:
   version "0.26.1"
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
@@ -4352,6 +4374,70 @@ safe-regex@^1.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
+
+sanctuary-def@0.21.1:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/sanctuary-def/-/sanctuary-def-0.21.1.tgz#40088fb7278ba6e344d46b74820f4b187d822dd2"
+  integrity sha512-TmsAahZZiNzPMzyL2FXdZsygFlpz5uqzLbhBqJZFOTNTTZa99aJUa4pxSnA5tK3jvMOK2le1qsBd2q2Ra4K+cw==
+  dependencies:
+    sanctuary-either "2.1.0"
+    sanctuary-show "2.0.0"
+    sanctuary-type-classes "12.1.0"
+    sanctuary-type-identifiers "3.0.0"
+
+sanctuary-either@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/sanctuary-either/-/sanctuary-either-2.1.0.tgz#ccbea2ff8243902e99d6e00b3f7e3055bc954e3a"
+  integrity sha512-AsQCma2yGAVS7Dlxme/09NZWQfcXBNylVmkuvarp8uOe9otSwClOgQyyePN2OxO4hTf3Au1Ck4ggm+97Je06kA==
+  dependencies:
+    sanctuary-show "2.0.0"
+    sanctuary-type-classes "12.1.0"
+
+sanctuary-maybe@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/sanctuary-maybe/-/sanctuary-maybe-2.1.0.tgz#3ae6e35b5c5c72cc75fe0626b67a74abc4e68d91"
+  integrity sha512-xCmvaEkYaIz5klWUrsgvgORKTL3bVYxATp7HyGBY0ZCu9tHJtSYDTpwnqMkRknHFIU986Kr2M/dJdiFvuc6UCQ==
+  dependencies:
+    sanctuary-show "2.0.0"
+    sanctuary-type-classes "12.1.0"
+
+sanctuary-pair@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/sanctuary-pair/-/sanctuary-pair-2.1.0.tgz#fe788dc95d164709c846e865049585cdd2fc8277"
+  integrity sha512-yY1JzzIJ/Ex7rjN8NmQLB7yv6GVzNeaMvxoYSW8w1ReLQI0n2sGOVCnAVipZuCv7wmfd+BavSXp59rklJeYytw==
+  dependencies:
+    sanctuary-show "2.0.0"
+    sanctuary-type-classes "12.1.0"
+
+sanctuary-show@2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/sanctuary-show/-/sanctuary-show-2.0.0.tgz#2326b4744f4b0f993f18ca56a29f68a50f514637"
+  integrity sha512-REj4ZiioUXnDLj6EpJ9HcYDIEGaEexmB9Fg5o6InZR9f0x5PfnnC21QeU9SZ9E7G8zXSZPNjy8VRUK4safbesw==
+
+sanctuary-type-classes@12.1.0:
+  version "12.1.0"
+  resolved "https://registry.yarnpkg.com/sanctuary-type-classes/-/sanctuary-type-classes-12.1.0.tgz#2d1457f678cb621bcda64fe537f5d07da5556c3a"
+  integrity sha512-oWP071Q88dEgJwxHLZp8tc7DoS+mWmYhYOuhP85zznPpIxV1ZjJfyRvcR59YCazyFxyFeBif7bJx1giLhDZW0Q==
+  dependencies:
+    sanctuary-type-identifiers "3.0.0"
+
+sanctuary-type-identifiers@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/sanctuary-type-identifiers/-/sanctuary-type-identifiers-3.0.0.tgz#51cb488d2ed9f194946a64ffe2b41dd49a348c0b"
+  integrity sha512-YFXYcG0Ura1dSPd/1xLYtE2XAWUEsBHhMTZvYBOvwT8MeFQwdUOCMm2DC+r94z6H93FVq0qxDac8/D7QpJj6Mg==
+
+sanctuary@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/sanctuary/-/sanctuary-3.0.0.tgz#7ef7ae42cf682af524c0e2bd0a2e0723e0988692"
+  integrity sha512-SUenKFdibPWHXT398gIGoBTY2RHcSf8lHwU8TuDDUtE+U8wXMhrRCLqQDbBLGf0mi//zS52e6LGfNVR1z3Zb7w==
+  dependencies:
+    sanctuary-def "0.21.1"
+    sanctuary-either "2.1.0"
+    sanctuary-maybe "2.1.0"
+    sanctuary-pair "2.1.0"
+    sanctuary-show "2.0.0"
+    sanctuary-type-classes "12.1.0"
+    sanctuary-type-identifiers "3.0.0"
 
 sax@~1.2.4:
   version "1.2.4"

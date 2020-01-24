@@ -1,9 +1,22 @@
-import { dec, gt, ifElse, inc, includes, indexOf, map, nth, apply, flip } from "ramda"
+import {
+  dec,
+  gt,
+  ifElse,
+  inc,
+  includes,
+  indexOf,
+  nth,
+  apply,
+  compose,
+  map,
+  length,
+  prop
+} from "ramda"
 
 const { abs, max, min } = Math
 
 // getTopOfChild :: Element -> Number
-const getTopOfChild = e => e.getBoundingClientRect().top
+const getTopOfChild = maybe => maybe.getBoundingClientRect().top
 
 // offset :: [Number] -> Number
 const offset = offsets => {
@@ -12,12 +25,11 @@ const offset = offsets => {
 }
 
 // incdec :: [Element] -> (* -> Boolean) -> Number
-const incdec = children => predicate => {
-  const current = children |> map(getTopOfChild) |> offset
+const incdec = (value, maximum) => predicate => {
   return ifElse(
     () => predicate,
-    () => max(dec(current), 0),
-    () => min(inc(current), dec(children.length))
+    () => max(dec(value), 0),
+    () => min(inc(value), dec(maximum))
   )(null)
 }
 
@@ -27,19 +39,23 @@ const listener = (x, k) => {
   return () => document.removeEventListener(x, k)
 }
 
-const fullpagescroll = (container, scrollable = window) => {
-  // children :: [Element]
-  const children = Array.from(container.children)
-  // scroll :: Number -> *
-  const scroll = y => scrollable.scrollBy(0, y)
-  // getChild :: Number -> Element
-  const getChild = flip(nth)(children)
+const scroll = x => y => x.scrollBy(0, y)
+
+const fullpagescroll = (innerContainer, outerContainer = window) => {
+  const scroller = scroll(outerContainer)
+
+  // getChildren :: Element -> [Element]
+  const getChildren = compose(Array.from, prop("children"))
+  const getChildrenLength = compose(length, getChildren)
+  const getChild = x => compose(nth(x), getChildren)
+  const current = getChildren(innerContainer) |> map(getTopOfChild) |> offset
   // getIndedx :: (* -> Boolean) -> Number
-  const getIndex = incdec(children)
+  const getIndex = incdec(current, getChildrenLength(innerContainer))
+  const tfscroll = x => compose(scroller, getTopOfChild, compose(getChild, getIndex)(x))
   // emitter :: (* -> Boolean) -> Event -> *
   const emitter = predicate => event => {
     if (predicate(event) !== 0) {
-      event |> predicate |> getIndex |> getChild |> getTopOfChild |> scroll
+      tfscroll(predicate(event))(innerContainer)
     }
   }
 
