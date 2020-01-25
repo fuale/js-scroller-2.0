@@ -16,7 +16,7 @@ export default class FullPageScroll {
     this.scroll = options.scroll || options.container
   }
 
-  private getTopOffset(element: Element): number {
+  private static getTopOffset(element: Element): number {
     return element.getBoundingClientRect().top
   }
 
@@ -30,16 +30,20 @@ export default class FullPageScroll {
   }
 
   private getCurrent(): number {
+    const { abs } = Math
     const children = Array.from(this.container.children)
-    const offsets = children.map(this.getTopOffset)
-    const { abs, max } = Math
-    return offsets.indexOf(
-      offsets.reduce((a, c) => (abs(c) < abs(a) ? c : a), max(...offsets))
-    )
+    let offsets = []
+    for (let i = children.length; i--; ) {
+      offsets[i] = FullPageScroll.getTopOffset(children[i])
+    }
+    const minimum = offsets.reduce((a, c) => (abs(c) < abs(a) ? c : a), Infinity)
+    return offsets.indexOf(minimum)
   }
 
   private scrollTo(i: number) {
-    this.scroll.scrollBy(0, this.getTopOffset(this.container.children.item(i)))
+    const child = this.container.children.item(i)
+    const range = FullPageScroll.getTopOffset(child)
+    this.scroll.scrollBy(0, range)
   }
 
   private keyboardEventHandler(event: KeyboardEvent): void {
