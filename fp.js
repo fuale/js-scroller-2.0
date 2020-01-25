@@ -2,12 +2,12 @@ import { dec, includes, indexOf, nth, pipe, map, length, prop, add, call } from 
 
 const { abs, max, min } = Math
 const getTop = maybe => maybe.getBoundingClientRect().top
+const scroll = x => y => (x.scrollBy(0, y), y)
 const listener = (x, k) => (
   document.addEventListener(x, k, { passive: false }),
   () => document.removeEventListener(x, k)
 )
 
-const scroll = x => y => (x.scrollBy(0, y), y)
 const fullpagescroll = (innerContainer, outerContainer = window) => {
   const scroller = scroll(outerContainer)
   const position = () => innerContainer |> prop("children") |> Array.from |> map(getTop)
