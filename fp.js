@@ -34,6 +34,12 @@ const listener = (x, k) => (
   () => document.removeEventListener(x, k)
 )
 
+/**
+ * @param innerContainer {Element} - contains slides
+ * @param outerContainer - where scrolling
+ * @returns {function(): function(): *}
+ * @sig Element -> Element -> (* -> (* -> *))
+ */
 const fullpagescroll = (
   innerContainer,
   outerContainer = window
