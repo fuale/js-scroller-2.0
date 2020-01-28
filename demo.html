@@ -15,63 +15,85 @@
     <style>
       .wall {
         width: 100%;
-        line-height: 100vh;
+        line-height: 80vh;
         color: white;
-        font-size: 50vh;
-        font-family: Roboto, monospace;
+        font-size: 320px;
+        font-family: monospace;
         text-align: center;
-        height: 100vh;
-      }
-      .wall:nth-child(1) {
-        background: teal;
-      }
-      .wall:nth-child(2) {
-        background: blueviolet;
-      }
-      .wall:nth-child(3) {
-        background: peru;
-      }
-      .wall:nth-child(4) {
-        background: coral;
-      }
-      .wall:nth-child(5) {
-        background: deeppink;
-      }
-      .wall:nth-child(6) {
-        background: indigo;
+        height: 800px;
       }
       .containers {
-        display: flex;
+        width: 80%;
+        margin: auto;
+        gap: 20px;
+        display: grid;
+        height: 800px;
         justify-content: center;
-        align-items: center;
+        grid-template: 1fr / 1fr 1fr;
+      }
+      h3 {
+        text-align: center;
+        font-size: 26px;
+        color: dimgray;
+        font-family: monospace;
       }
       #fp,
       #oop {
         scroll-behavior: smooth;
-        height: 100vh;
-        overflow: auto;
+        height: 800px;
+        overflow: hidden;
         width: 90%;
       }
     </style>
   </head>
   <body>
     <div class="containers">
-      <div id="fp">
-        <div class="wall">F</div>
-        <div class="wall">P</div>
-        <div class="wall">F</div>
-        <div class="wall">P</div>
-        <div class="wall">F</div>
-        <div class="wall">P</div>
-      </div>
-      <div id="oop">
-        <div class="wall">O</div>
-        <div class="wall">O</div>
-        <div class="wall">P</div>
-        <div class="wall">O</div>
-        <div class="wall">O</div>
-        <div class="wall">P</div>
-      </div>
+      <section>
+        <h3>FP scroller</h3>
+        <div id="fp">
+          <div class="wall" style="background: teal;">
+            F
+          </div>
+          <div class="wall" style="background: blueviolet;">
+            P
+          </div>
+          <div class="wall" style="background: peru;">
+            F
+          </div>
+          <div class="wall" style="background: coral;">
+            P
+          </div>
+          <div class="wall" style="background: deeppink;">
+            F
+          </div>
+          <div class="wall" style="background: indigo;">
+            P
+          </div>
+        </div>
+      </section>
+      <section>
+        <h3>OOP scroller</h3>
+        <div id="oop">
+          <div class="wall" style="background: teal;">
+            O
+          </div>
+          <div class="wall" style="background: blueviolet;">
+            O
+          </div>
+          <div class="wall" style="background: peru;">
+            P
+          </div>
+          <div class="wall" style="background: coral;">
+            O
+          </div>
+          <div class="wall" style="background: deeppink;">
+            O
+          </div>
+          <div class="wall" style="background: indigo;">
+            P
+          </div>
+        </div>
+      </section>
     </div>
     <script src="demo.js"></script>
   </body>

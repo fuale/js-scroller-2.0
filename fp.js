@@ -8,7 +8,8 @@ import {
   length,
   prop,
   add,
-  call
+  call,
+  negate
 } from "ramda"
 
 const { abs, max, min } = Math
@@ -25,47 +26,43 @@ const getTop = maybe => maybe.getBoundingClientRect().top
 /**
  * add listener to dom and
  * returns function that removes it
- * @param x {string}
- * @param k {function}
- * @sig String -> (Event -> *) -> (* -> *)
+ * @sig Element -> String -> (Event -> *) -> (* -> *)
  */
-const listener = (x, k) => (
-  document.addEventListener(x, k, { passive: false }),
-  () => document.removeEventListener(x, k)
+const listener = y => (x, k) => (
+  y.addEventListener(x, k, { passive: false }),
+  () => y.removeEventListener(x, k)
 )
 
 /**
- * @param innerContainer {Element} - contains slides
- * @param outerContainer - where scrolling
+ * @param container {Element} - contains slides
  * @returns {function(): function(): *}
- * @sig Element -> Element -> (* -> (* -> *))
+ * @sig Element -> (* -> (* -> *))
  */
-const fullpagescroll = (
-  innerContainer,
-  outerContainer = window
-) => {
+const fullpagescroll = (container = document.body) => {
   /**
    * @sig Number -> *
    * @param y {number}
    */
-  const scroller = y => outerContainer.scrollBy(0, y)
+  const scroller = y => container.scrollBy(0, y)
+
+  const getOffset =
+    container |> getTop |> negate |> add |> map
 
   /**
-   * @pure
    * @sig * -> [Number]
    * @returns {number[]}
    */
   const position = () =>
-    innerContainer
+    container
     |> prop("children")
     |> Array.from
     |> map(getTop)
+    |> getOffset
 
   /** @type {number} */
   const len = position() |> length |> dec
 
   /**
-   * @pure
    * @param x {number[]}
    * @sig [Number] -> Number
    * @returns {number}
@@ -98,9 +95,9 @@ const fullpagescroll = (
   ]
 
   return () => {
-    const m = listener("wheel", mouse)
-    const k = listener("keydown", keyboard)
-    return () => [m, k] |> map(call)
+    const l1 = listener(container)("wheel", mouse)
+    const l2 = listener(window)("keydown", keyboard)
+    return () => [l1, l2] |> map(call)
   }
 }
 

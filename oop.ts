@@ -1,15 +1,11 @@
 interface Options {
   container: Element
-  scroll: Scrollable
-}
-
-interface Scrollable {
-  scrollBy(x: number, y: number): void
+  scroll: Element
 }
 
 export default class FullPageScroll {
   private readonly container: Element
-  private readonly scroll: Scrollable
+  private readonly scroll: Element
 
   constructor(options: Options) {
     this.container = options.container
@@ -36,21 +32,29 @@ export default class FullPageScroll {
     for (let i = children.length; i--; ) {
       offsets[i] = FullPageScroll.getTopOffset(children[i])
     }
-    const minimum = offsets.reduce((a, c) => (abs(c) < abs(a) ? c : a), Infinity)
+    const minimum = offsets.reduce(
+      (a, c) => (abs(c) < abs(a) ? c : a),
+      Infinity
+    )
     return offsets.indexOf(minimum)
   }
 
   private scrollTo(i: number) {
     const child = this.container.children.item(i)
     const range = FullPageScroll.getTopOffset(child)
-    this.scroll.scrollBy(0, range)
+    const offset = FullPageScroll.getTopOffset(
+      this.container
+    )
+    this.scroll.scrollBy(0, range - offset)
   }
 
   private keyboardEventHandler(event: KeyboardEvent): void {
     const max = this.container.children.length - 1
     const current = this.getCurrent()
     const up = ["PageUp", "ArrowUp"].includes(event.key)
-    const down = ["PageDown", "ArrowDown"].includes(event.key)
+    const down = ["PageDown", "ArrowDown"].includes(
+      event.key
+    )
     if (up || down) {
       event.preventDefault()
       up && this.scrollTo(Math.max(current - 1, 0))
@@ -59,14 +63,27 @@ export default class FullPageScroll {
   }
 
   public enableEventListeners(): void {
-    document.addEventListener("wheel", this.wheelEventHandler.bind(this), {
-      passive: false
-    })
-    document.addEventListener("keydown", this.keyboardEventHandler.bind(this))
+    this.container.addEventListener(
+      "wheel",
+      this.wheelEventHandler.bind(this),
+      {
+        passive: false
+      }
+    )
+    document.addEventListener(
+      "keydown",
+      this.keyboardEventHandler.bind(this)
+    )
   }
 
   public disableEventListeners(): void {
-    document.removeEventListener("wheel", this.wheelEventHandler.bind(this))
-    document.removeEventListener("keydown", this.keyboardEventHandler.bind(this))
+    this.container.removeEventListener(
+      "wheel",
+      this.wheelEventHandler.bind(this)
+    )
+    document.removeEventListener(
+      "keydown",
+      this.keyboardEventHandler.bind(this)
+    )
   }
 }
