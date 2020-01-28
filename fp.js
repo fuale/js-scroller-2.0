@@ -9,80 +9,61 @@ import {
   prop,
   add,
   call,
-  negate
+  negate,
+  lastIndexOf,
+  tap
 } from "ramda"
+
+import { Just } from "monet"
 
 const { abs, max, min } = Math
 
-/**
- * return top of the
- * block relative to window
- * @param maybe {Element}
- * @returns {number}
- * @sig Element -> Number
- */
 const getTop = maybe => maybe.getBoundingClientRect().top
 
-/**
- * add listener to dom and
- * returns function that removes it
- * @sig Element -> String -> (Event -> *) -> (* -> *)
- */
 const listener = y => (x, k) => (
   y.addEventListener(x, k, { passive: false }),
   () => y.removeEventListener(x, k)
 )
 
-/**
- * @param container {Element} - contains slides
- * @returns {function(): function(): *}
- * @sig Element -> (* -> (* -> *))
- */
-const fullpagescroll = (container = document.body) => {
-  /**
-   * @sig Number -> *
-   * @param y {number}
-   */
-  const scroller = y => container.scrollBy(0, y)
+const fullpagescroll = (c = document.body) => {
+  const container = Just(c)
+  const scroller = y =>
+    container.map(c => (c.scrollBy(0, y), c))
 
-  const getOffset =
-    container |> getTop |> negate |> add |> map
+  const getOffset = map(x =>
+    container
+      .map(getTop)
+      .map(negate)
+      .map(add(x))
+      .getOrElse(0)
+  )
 
-  /**
-   * @sig * -> [Number]
-   * @returns {number[]}
-   */
   const position = () =>
     container
-    |> prop("children")
-    |> Array.from
-    |> map(getTop)
-    |> getOffset
+      .map(prop("children"))
+      .map(Array.from)
+      .map(map(getTop))
+      .map(getOffset)
 
-  /** @type {number} */
-  const len = position() |> length |> dec
+  const len = position()
+    .map(length)
+    .map(dec)
+    .getOrElse(0)
 
-  /**
-   * @param x {number[]}
-   * @sig [Number] -> Number
-   * @returns {number}
-   */
   const current = x => indexOf(min(...x), x)
   const limit = e => (e < 0 ? max(dec(e), 0) : min(e, len))
-  const scroll = e => pipe(nth(e), scroller)(position())
+  const scroll = e =>
+    position()
+      .map(nth(e))
+      .map(scroller)
 
-  /**
-   * Перелистывание на `n`
-   * @param n - кол-во страниц
-   * @sig Number -> *
-   */
   const goto = n =>
     position()
-    |> map(abs)
-    |> current
-    |> add(n)
-    |> limit
-    |> scroll
+      .map(map(abs))
+      .map(current)
+      .map(add(n))
+      .map(limit)
+      .map(scroll)
 
   const [mouse, keyboard] = [
     event => goto(event.deltaY > 0 ? 1 : -1),
@@ -95,7 +76,7 @@ const fullpagescroll = (container = document.body) => {
   ]
 
   return () => {
-    const l1 = listener(container)("wheel", mouse)
+    const l1 = listener(c)("wheel", mouse)
     const l2 = listener(window)("keydown", keyboard)
     return () => [l1, l2] |> map(call)
   }

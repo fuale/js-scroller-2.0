@@ -1,15 +1,12 @@
 interface Options {
   container: Element
-  scroll: Element
 }
 
 export default class FullPageScroll {
   private readonly container: Element
-  private readonly scroll: Element
 
   constructor(options: Options) {
     this.container = options.container
-    this.scroll = options.scroll || options.container
   }
 
   private static getTopOffset(element: Element): number {
@@ -45,7 +42,7 @@ export default class FullPageScroll {
     const offset = FullPageScroll.getTopOffset(
       this.container
     )
-    this.scroll.scrollBy(0, range - offset)
+    this.container.scrollBy(0, range - offset)
   }
 
   private keyboardEventHandler(event: KeyboardEvent): void {
@@ -62,7 +59,7 @@ export default class FullPageScroll {
     }
   }
 
-  public enableEventListeners(): void {
+  public enableEventListeners(): this {
     this.container.addEventListener(
       "wheel",
       this.wheelEventHandler.bind(this),
@@ -74,9 +71,10 @@ export default class FullPageScroll {
       "keydown",
       this.keyboardEventHandler.bind(this)
     )
+    return this
   }
 
-  public disableEventListeners(): void {
+  public disableEventListeners(): this {
     this.container.removeEventListener(
       "wheel",
       this.wheelEventHandler.bind(this)
@@ -85,5 +83,6 @@ export default class FullPageScroll {
       "keydown",
       this.keyboardEventHandler.bind(this)
     )
+    return this
   }
 }

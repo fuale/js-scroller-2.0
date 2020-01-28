@@ -10,9 +10,13 @@ const [oop, fp] = ["oop", "fp"].map(e =>
  * @type {FullPageScroll}
  */
 new FullPageScroll({
-  container: oop,
-  scroll: oop
-}).enableEventListeners()
+  container: oop
+})
+  .enableEventListeners()
+  .disableEventListeners()
+  .enableEventListeners()
+  .disableEventListeners()
+  .enableEventListeners()
 
 /**
  * FP Realization
