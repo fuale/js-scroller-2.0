@@ -26,8 +26,8 @@ export default class FullPageScroll {
     const { abs } = Math
     const children = Array.from(this.container.children)
     let offsets = []
-    for (let i = children.length; i--; ) {
-      offsets[i] = FullPageScroll.getTopOffset(children[i])
+    for (const child of children) {
+      offsets.push(FullPageScroll.getTopOffset(child))
     }
     const minimum = offsets.reduce(
       (a, c) => (abs(c) < abs(a) ? c : a),
@@ -39,9 +39,7 @@ export default class FullPageScroll {
   private scrollTo(i: number) {
     const child = this.container.children.item(i)
     const range = FullPageScroll.getTopOffset(child)
-    const offset = FullPageScroll.getTopOffset(
-      this.container
-    )
+    const offset = FullPageScroll.getTopOffset(this.container)
     this.container.scrollBy(0, range - offset)
   }
 
@@ -49,9 +47,7 @@ export default class FullPageScroll {
     const max = this.container.children.length - 1
     const current = this.getCurrent()
     const up = ["PageUp", "ArrowUp"].includes(event.key)
-    const down = ["PageDown", "ArrowDown"].includes(
-      event.key
-    )
+    const down = ["PageDown", "ArrowDown"].includes(event.key)
     if (up || down) {
       event.preventDefault()
       up && this.scrollTo(Math.max(current - 1, 0))
@@ -67,10 +63,7 @@ export default class FullPageScroll {
         passive: false
       }
     )
-    document.addEventListener(
-      "keydown",
-      this.keyboardEventHandler.bind(this)
-    )
+    document.addEventListener("keydown", this.keyboardEventHandler.bind(this))
     return this
   }
 

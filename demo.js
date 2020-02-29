@@ -1,9 +1,7 @@
-import fullpagescroll from "./fp"
-import FullPageScroll from "./oop"
+import fullpagescroll from "./realizations/functional"
+import FullPageScroll from "./realizations/object-oriented"
 
-const [oop, fp] = ["oop", "fp"].map(e =>
-  document.getElementById(e)
-)
+const [oop, fp] = ["oop", "fp"].map(e => document.getElementById(e))
 
 /**
  * OOP Realization
@@ -15,8 +13,6 @@ new FullPageScroll({
   .enableEventListeners()
   .disableEventListeners()
   .enableEventListeners()
-  .disableEventListeners()
-  .enableEventListeners()
 
 /**
  * FP Realization
@@ -24,3 +20,6 @@ new FullPageScroll({
  */
 const start = fullpagescroll(fp),
   stop = start()
+
+stop()
+start()
